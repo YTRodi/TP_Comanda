@@ -51,7 +51,12 @@ $app->get( '/productos', ProductoController::class . ':getAllProductos' )
 $app->group( '/pedidos', function ( RouteCollectorProxy $group ) {
 
     $group->get( '[/]', PedidoController::class . ':getAllPedidos' )->add( new AuthMiddleware( 'admin' ) );
+    $group->get( '/{codigo}', PedidoController::class . ':getPedidoByCode' );
+    $group->put( '/{codigo}', PedidoController::class . ':updatePedido' )->add( new AuthAllMiddleware( ARRAY_ROLES ) );
     $group->post( '[/]', PedidoController::class . ':addPedido' )->add( new AuthMiddleware( 'mozo' ) );
+
+
+
     $group->delete( '/{id}', PedidoController::class . ':deletePedido' );
 
 })->add( new JsonMiddleware );
@@ -60,9 +65,8 @@ $app->group( '/pedidos', function ( RouteCollectorProxy $group ) {
 // - Preparaciones -
 $app->group( '/preparaciones', function ( RouteCollectorProxy $group ) {
 
-    $group->get( '[/]', PreparacioneController::class . ':getAllPreparaciones' )->add( new AuthAllMiddleware( ARRAY_ROLES ) );
-    $group->post( '[/]', PreparacioneController::class . ':addPreparacion' )->add( new AuthAllMiddleware( ARRAY_ROLES ) );;
-    // $group->delete( '/{id}', PreparacioneController::class . ':deletePedido' );
+    $group->get( '/{codigo}', PreparacioneController::class . ':getPreparacionesByCode' )->add( new AuthAllMiddleware( ARRAY_ROLES ) );
+    $group->put( '/{codigo}', PreparacioneController::class . ':updatePreparacion' )->add( new AuthAllMiddleware( ARRAY_ROLES ) );
 
 })->add( new JsonMiddleware );
 
