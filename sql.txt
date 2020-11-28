@@ -1,0 +1,40 @@
+tabla USUARIOS:
+insert into usuarios (username, password, estado, sector, operaciones) values ('rodiyago', 'soyadmin', 'servicio', 'admin', 0);
+insert into usuarios (username, password, estado, sector, operaciones) values ('maggierodi', 'soyadmin', 'servicio', 'admin', 0);
+insert into usuarios (username, password, estado, sector, operaciones) values ('scottrodi', 'soyadmin', 'servicio', 'admin', 0);
+insert into usuarios (username, password, estado, sector, operaciones) values ('bendersby1', 'VDLYorB', 'servicio', 'cocina', 2);
+insert into usuarios (username, password, estado, sector, operaciones) values ('ilermit2', 'UJ7HK7', 'servicio', 'cocina', 3);
+insert into usuarios (username, password, estado, sector, operaciones) values ('karntzen3', 'rv2XPsZ', 'servicio', 'barra', 6);
+insert into usuarios (username, password, estado, sector, operaciones) values ('enelthorpe4', 'rQXMdDR', 'suspendido', 'barra', 14);
+insert into usuarios (username, password, estado, sector, operaciones) values ('elpepe', '1234', 'borrado', 'cocina', 14);
+insert into usuarios (username, password, estado, sector, operaciones) values ('egrissett6', 'VE5pC4WcSFk', 'servicio', 'cerveza', 5);
+insert into usuarios (username, password, estado, sector, operaciones) values ('jmyall7', 'Ho2Fwqt', 'suspendido', 'cerveza', 12);
+insert into usuarios (username, password, estado, sector, operaciones) values ('elmejormozo', 'elmozo01', 'servicio', 'mozo', 3);
+insert into usuarios (username, password, estado, sector, operaciones) values ('saleconfrita', 'elmozo02', 'servicio', 'mozo', 12);
+
+tabla PRODUCTOS:
+// comidas
+insert into productos (descripcion, precio, sector) values ('milanesa napolitana',350 , 'cocina');
+insert into productos (descripcion, precio, sector) values ('papas fritas',150 , 'cocina');
+insert into productos (descripcion, precio, sector) values ('sorrentinos',350 , 'cocina');
+insert into productos (descripcion, precio, sector) values ('pizza',300 , 'cocina');
+insert into productos (descripcion, precio, sector) values ('fideos con tuco',180 , 'cocina');
+insert into productos (descripcion, precio, sector) values ('lasagna',200 , 'cocina');
+// bebidas
+insert into productos (descripcion, precio, sector) values ('vino tinto',215 , 'barra');
+insert into productos (descripcion, precio, sector) values ('heineken',180 , 'cerveza');
+insert into productos (descripcion, precio, sector) values ('quilmes',150 , 'cerveza');
+insert into productos (descripcion, precio, sector) values ('coca cola',150 , 'barra');
+insert into productos (descripcion, precio, sector) values ('seven up',150 , 'barra');
+insert into productos (descripcion, precio, sector) values ('agua mineral',100 , 'barra');
+// candybar
+insert into productos (descripcion, precio, sector) values ('helado',125 , 'cocina');
+insert into productos (descripcion, precio, sector) values ('torta',125 , 'cocina');
+insert into productos (descripcion, precio, sector) values ('flan',125 , 'cocina');
+
+// INNER JOIN
+Alumno::select('alumnos.nombre', 'alumnos.apellido', 'materias.nombre AS materia')
+                                    ->join('inscripciones', 'alumnos.id', '=', 'inscripciones.id_alumno')
+                                    ->join('materias', 'inscripciones.id_materia', '=', 'materias.id')
+                                    ->where([['alumnos.id', $id_alumno], ['id_materia', $id_materia]])
+                                    ->get();    
