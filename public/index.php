@@ -2,6 +2,7 @@
 
 // Slim
 
+use App\Controllers\MesaController;
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -54,10 +55,7 @@ $app->group( '/pedidos', function ( RouteCollectorProxy $group ) {
     $group->get( '/{codigo}', PedidoController::class . ':getPedidoByCode' );
     $group->put( '/{codigo}', PedidoController::class . ':updatePedido' )->add( new AuthAllMiddleware( ARRAY_ROLES ) );
     $group->post( '[/]', PedidoController::class . ':addPedido' )->add( new AuthMiddleware( 'mozo' ) );
-
-
-
-    $group->delete( '/{id}', PedidoController::class . ':deletePedido' );
+    // $group->delete( '/{id}', PedidoController::class . ':deletePedido' );
 
 })->add( new JsonMiddleware );
 
@@ -70,6 +68,16 @@ $app->group( '/preparaciones', function ( RouteCollectorProxy $group ) {
 
 })->add( new JsonMiddleware );
 
+
+// - Mesas -
+$app->group( '/mesas', function ( RouteCollectorProxy $group ) {
+
+    $group->get( '[/]', MesaController::class . ':getAllMesas' )->add( new AuthMiddleware( 'admin' ) );
+    $group->get( '/{codigo}', MesaController::class . ':getMesaByCode' );
+    $group->put( '/{codigo}', MesaController::class . ':updateMesa' );
+    $group->post( '[/]', MesaController::class . ':addMesa' )->add( new AuthMiddleware( 'admin' ) );
+
+})->add( new JsonMiddleware );
 
 // $app->group( '/users', function ( RouteCollectorProxy $group ) {
 

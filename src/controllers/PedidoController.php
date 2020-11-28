@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Mesa;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -40,18 +41,6 @@ class PedidoController {
 
     public function addPedido ( Request $request, Response $response ) {
 
-        // "codigo": "co123",
-        // "id_mesa": 2,
-        // "id_mozo": 12,
-        // "nombre_cliente": "Milhouse",
-        // "tiempo_espera": 10,
-        // "estado_cocina": "listo",
-        // "estado_barra": "listo",
-        // "estado_cerveza": "listo",
-        // "preparaciones" : [
-        //     { "id_producto": 4, "cantidad": 1 },
-        //     { "id_producto": 8, "cantidad": 2 }
-        // ]
         $codigo = Pedido::generateUniqueCode();
         $preparaciones = $request->getParsedBody()['preparaciones'];
         
@@ -83,18 +72,20 @@ class PedidoController {
             $nuevaPreparacion[ 'cantidad' ] = $cantidadProducto;
             // echo json_encode( $nuevaPreparacion );
 
-
             $rtaPreparacion = $nuevaPreparacion->save();
             $response->getBody()->write( json_encode( $rtaPreparacion ) );
 
         }
 
         $pedido = new Pedido;
+        $codigoMesa = $request->getParsedBody()['codigo_mesa'] ?? '';
+        $mesa = Mesa::get()->where( 'codigo', $codigoMesa )->first();
+
         // Si no existe pedido con este código, puedo crearlo.
         if( !Pedido::where( 'codigo', $codigo )->exists() ) {
 
             $pedido['codigo'] = $codigo;
-            $pedido['id_mesa'] = intval( $request->getParsedBody()['id_mesa'] ?? '' );
+            $pedido['codigo_mesa'] = $codigoMesa;
             $pedido['id_mozo'] = intval( $request->getParsedBody()['id_mozo'] ?? '' );
             $pedido['nombre_cliente'] = $request->getParsedBody()['nombre_cliente'] ?? '';
             $pedido['tiempo_espera'] = intval( $request->getParsedBody()['tiempo_espera'] ?? '' );
@@ -102,9 +93,14 @@ class PedidoController {
             $pedido['estado_cocina'] = $request->getParsedBody()['estado_cocina'] ?? '';
             $pedido['estado_barra'] = $request->getParsedBody()['estado_barra'] ?? '';
             $pedido['estado_cerveza'] = $request->getParsedBody()['estado_cerveza'] ?? '';
-            // echo json_encode( $pedido );
-    
+                
             $rta = $pedido->save();
+            $response->getBody()->write( json_encode( $rta ) );
+
+            // Le cambio el estado a la mesa.
+            $mesa['estado'] = 'con cliente esperando pedido';
+
+            $rta = $mesa->save();
             $response->getBody()->write( json_encode( $rta ) );
 
         }
@@ -156,7 +152,7 @@ class PedidoController {
                 
             } else {
                 
-                // Si el tiempo esperado es -= tiempo esperado => significa que el pedido está listo, osea que le cambio el estado.
+                // Si el tiempo esperado es -= tiempo esperado => significa que el pedido está listo, por lo tanto le cambio el estado.
                 if( $pedido['estado_cocina'] === 'en preparación' ) $pedido['estado_cocina'] = 'listo';
                 if( $pedido['estado_barra'] === 'en preparación' ) $pedido['estado_barra'] = 'listo';
                 if( $pedido['estado_cerveza'] === 'en preparación' ) $pedido['estado_cerveza'] = 'listo';
@@ -175,6 +171,7 @@ class PedidoController {
                     $usuario['operaciones'] += $preparacion['cantidad']; // Le sumamos las cantidades que preparó.
                     $rta = $usuario->save();
                 }
+
                 
             }
             

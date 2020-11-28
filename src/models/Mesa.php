@@ -5,7 +5,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pedido extends Model {
+class Mesa extends Model {
 
     public function __get($name){ return $this->$name; }
     public function __set($name, $value){ $this->$name = $value; }
