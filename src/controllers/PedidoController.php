@@ -27,7 +27,11 @@ class PedidoController {
         // Lógica: con el código me traigo el pedido específico.
         $codigoPedido = $args['codigo'];
         $pedidoByCode = Pedido::get()->where( 'codigo', '=', $codigoPedido )->first();
-        $response->getBody()->write( json_encode( $pedidoByCode ));
+
+        if( $pedidoByCode )
+            $response->getBody()->write( json_encode( $pedidoByCode ));
+        else 
+            $response->getBody()->write( 'No existe el pedido con el código ' . $codigoPedido );
 
         return $response;
 
@@ -72,7 +76,6 @@ class PedidoController {
                 ->where( 'sector', '=', $producto['sector'] )
                 ->where( 'estado', '=', 'servicio' )
                 ->first();
-            //? TENGO QUE SUBIRLE LAS 'operaciones' => operaciones++; A LO ULTIMO!! CUANDO PONGO EL ESTADO LISTO EN LA PREPARACION
             // echo $empleado;
             
             $nuevaPreparacion[ 'id_usuario' ] = $empleado['id'];
@@ -95,6 +98,7 @@ class PedidoController {
             $pedido['id_mozo'] = intval( $request->getParsedBody()['id_mozo'] ?? '' );
             $pedido['nombre_cliente'] = $request->getParsedBody()['nombre_cliente'] ?? '';
             $pedido['tiempo_espera'] = intval( $request->getParsedBody()['tiempo_espera'] ?? '' );
+            $pedido['estado_general'] = $request->getParsedBody()['estado_general'] ?? '';
             $pedido['estado_cocina'] = $request->getParsedBody()['estado_cocina'] ?? '';
             $pedido['estado_barra'] = $request->getParsedBody()['estado_barra'] ?? '';
             $pedido['estado_cerveza'] = $request->getParsedBody()['estado_cerveza'] ?? '';
@@ -142,9 +146,9 @@ class PedidoController {
                             break;
     
                     }  
-                    
                 }
                 
+                $pedido['estado_general'] = 'en preparación';
                 // Resto el tiempo de espera para poder avisar que el pedido está listo...
                 $pedido['tiempo_espera'] -= $pedido['tiempo_espera'];
                 $rta = $pedido->save();
@@ -156,9 +160,21 @@ class PedidoController {
                 if( $pedido['estado_cocina'] === 'en preparación' ) $pedido['estado_cocina'] = 'listo';
                 if( $pedido['estado_barra'] === 'en preparación' ) $pedido['estado_barra'] = 'listo';
                 if( $pedido['estado_cerveza'] === 'en preparación' ) $pedido['estado_cerveza'] = 'listo';
+                $pedido['estado_general'] = 'listo';
                 
+                // Guardo el nuevo estado del pedido.
                 $rta = $pedido->save();
                 $response->getBody()->write( json_encode( $rta ) );
+
+                // Aumentó la cantidad de operaciones al empleado correspondiente.
+                foreach ( $preparacionesByCode as $key => $preparacion ) {
+
+                    $idUsuario = $preparacion['id_usuario'];
+                    $usuario = Usuario::get()->where( 'id', '=', $idUsuario )->first();
+
+                    $usuario['operaciones'] += $preparacion['cantidad']; // Le sumamos las cantidades que preparó.
+                    $rta = $usuario->save();
+                }
                 
             }
             
@@ -171,41 +187,5 @@ class PedidoController {
         }
         
     }
-    
-
-    // public function updatePedidoAListo ( Request $request, Response $response, $args ) {
-    
-    //     try {
-
-    //         $codigoPedido = $args['codigo'];
-    //         $pedido = Pedido::get()->where( 'codigo', '=', $codigoPedido )->first();
-    //         // Traigo todas las preparaciones con el código especificado.
-    //         $preparacionesByCode = Preparacione::where( 'codigo_pedido', '=', $codigoPedido )->get();
-
-    //         foreach ( $preparacionesByCode as $key => $preparacion ) {
-
-    //             // Lógica: Si el usuario está en la preparación, le cambio el estado al pedido.
-    //             $idUsuario = $preparacion['id_usuario'];
-    //             $usuario = Usuario::get()->where( 'id', '=', $idUsuario )->first();
-
-    //             if( $pedido['estado_cocina'] === 'en preparación' ) {
-    //                 $pedido['estado_cocina'] = 'listo para servir';
-    //             }
-
-    //         }
-
-    //         echo $pedido;
-    //         // $rta = $pedido->save();
-    //         // $response->getBody()->write( json_encode( $rta ) );
-            
-    //         return $response;
-
-    //     } catch (\Throwable $e) {
-
-    //         throw new Exception( $e->getMessage() );
-
-    //     }
-        
-    // }
 
 }
