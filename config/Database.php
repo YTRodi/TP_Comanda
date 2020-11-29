@@ -14,10 +14,10 @@ class Database {
 
         $capsule->addConnection([
             'driver'    => 'mysql',
-            'host'      => 'bnqbjabqekwmoupl8t93-mysql.services.clever-cloud.com',
-            'database'  => 'bnqbjabqekwmoupl8t93',
-            'username'  => 'u3u8mcep1vn0irkg',
-            'password'  => 'tz4BQqi9l0TOm7A6peqE',
+            'host'      => 'localhost',
+            'database'  => 'id15541186_restaurante',
+            'username'  => 'id15541186_yago',
+            'password'  => 'Fbv%\qGax3Dro$YA',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
