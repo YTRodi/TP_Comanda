@@ -8,7 +8,7 @@ use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 
 // Controllers
-// use Config\Database;
+use Config\Database;
 use App\Controllers\UsuarioController;
 use App\Controllers\ProductoController;
 use App\Controllers\PedidoController;
@@ -26,7 +26,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 require __DIR__ . '/../vendor/autoload.php';
 
 
-// $conn = new Database;
+$conn = new Database;
 
 $app = AppFactory::create();
 // $app->setBasePath( '/TP_Comanda/public' );
