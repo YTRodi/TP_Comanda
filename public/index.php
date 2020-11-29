@@ -1,9 +1,17 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
+
+class Usuario extends Model {
+
+    public function __get($name){ return $this->$name; }
+    public function __set($name, $value){ $this->$name = $value; }
+}
+
+
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use App\Models\Usuario;
 
 class UsuarioController {
 
