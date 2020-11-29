@@ -42,7 +42,7 @@ $app->group( '/usuarios', function ( RouteCollectorProxy $group ) {
     $group->post( '[/]', UsuarioController::class . ':addUser' );
     $group->delete( '/{id}', UsuarioController::class . ':deleteUser' );
 
-});
+})->add( new JsonMiddleware );
 
 // $app->post( '/login[/]', UsuarioController::class . ':loginUser' );
 
