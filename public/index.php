@@ -33,7 +33,7 @@ $app = AppFactory::create();
 const ARRAY_ROLES = [ 'admin', 'cocina', 'barra', 'cerveza', 'mozo']; // Para dar de alta preparaciones
 
 $app->get('/', function (Request $request, Response $response, array $args) {
-    $response->getBody()->write("Hello world");
+    $response->getBody()->write( "Hello world" );
     return $response;
 });
 

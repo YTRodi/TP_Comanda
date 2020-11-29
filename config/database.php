@@ -12,17 +12,12 @@ class Database {
 
         $capsule = new Capsule;
 
-        //usuario = b4e4b3601c6f5b
-        //password = 23d80340
-        //host = us-cdbr-east-02.cleardb.com
-        //database = heroku_e6ffb99d9fa17dd?reconnect=true
-
         $capsule->addConnection([
             'driver'    => 'mysql',
-            'host'      => 'localhost',
-            'database'  => 'restaurante',
-            'username'  => 'root',
-            'password'  => '',
+            'host'      => 'bnqbjabqekwmoupl8t93-mysql.services.clever-cloud.com',
+            'database'  => 'bnqbjabqekwmoupl8t93',
+            'username'  => 'u3u8mcep1vn0irkg',
+            'password'  => 'tz4BQqi9l0TOm7A6peqE',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
