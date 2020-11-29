@@ -17,8 +17,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Config\\":"./config",
-            "App\\":"./src"
+            "Config\\": "config/",
+            "App\\": "src/"
         }
     }
 }
