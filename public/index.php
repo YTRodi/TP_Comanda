@@ -26,7 +26,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 require __DIR__ . '/../vendor/autoload.php';
 
 
-$conn = new Database;
+// $conn = new Database;
 
 $app = AppFactory::create();
 // $app->setBasePath( '/TP_Comanda/public' );
