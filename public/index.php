@@ -48,9 +48,9 @@ use App\Controllers\PreparacioneController;
 
 
 // Middleware
-use App\Middleware\JsonMiddleware;
-use App\Middleware\AuthMiddleware;
-use App\Middleware\AuthAllMiddleware;
+// use App\Middleware\JsonMiddleware;
+// use App\Middleware\AuthMiddleware;
+// use App\Middleware\AuthAllMiddleware;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
