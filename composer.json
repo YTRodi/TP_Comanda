@@ -8,12 +8,12 @@
         }
     ],
     "require": {
+        "php": "^7.2.0",
         "slim/slim": "4.*",
         "slim/psr7": "^1.2",
         "illuminate/database": "^8.13",
         "illuminate/events": "^8.13",
-        "firebase/php-jwt": "^5.2",
-        "php": "^7.2.0"
+        "firebase/php-jwt": "^5.2"
     },
     "autoload": {
         "psr-4": {
