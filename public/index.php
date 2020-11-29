@@ -19,6 +19,9 @@ use App\Middleware\JsonMiddleware;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\AuthAllMiddleware;
 
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+
 require __DIR__ . '/../vendor/autoload.php';
 
 
@@ -28,6 +31,10 @@ $app = AppFactory::create();
 // $app->setBasePath( '/TP_Comanda/public' );
 const ARRAY_ROLES = [ 'admin', 'cocina', 'barra', 'cerveza', 'mozo']; // Para dar de alta preparaciones
 
+$app->get('/', function (Request $request, Response $response, array $args) {
+    $response->getBody()->write("Hello");
+    return $response;
+});
 
 // - Usuarios -
 $app->group( '/usuarios', function ( RouteCollectorProxy $group ) {
