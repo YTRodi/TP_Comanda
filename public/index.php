@@ -34,7 +34,6 @@ class Database {
     }
 
 }
-// Slim
 
 use App\Controllers\MesaController;
 use Slim\Factory\AppFactory;
