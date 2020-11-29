@@ -1,5 +1,8 @@
 <?php
 
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+
 use App\Models\Usuario;
 
 class UsuarioController {
@@ -220,8 +223,8 @@ use App\Controllers\PreparacioneController;
 // use App\Middleware\AuthMiddleware;
 // use App\Middleware\AuthAllMiddleware;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+// use Psr\Http\Message\ResponseInterface as Response;
+// use Psr\Http\Message\ServerRequestInterface as Request;
 
 require __DIR__ . '/../vendor/autoload.php';
 
