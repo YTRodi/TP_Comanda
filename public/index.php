@@ -40,7 +40,7 @@ use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 
 // Controllers
-use Config\Database;
+use TP_Comanda\Config\Database;
 use App\Controllers\UsuarioController;
 use App\Controllers\ProductoController;
 use App\Controllers\PedidoController;
