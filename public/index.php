@@ -25,7 +25,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $conn = new Database;
 
 $app = AppFactory::create();
-$app->setBasePath( '/TP_Comanda/public' );
+// $app->setBasePath( '/TP_Comanda/public' );
 const ARRAY_ROLES = [ 'admin', 'cocina', 'barra', 'cerveza', 'mozo']; // Para dar de alta preparaciones
 
 
