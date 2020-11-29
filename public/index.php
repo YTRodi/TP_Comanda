@@ -72,7 +72,11 @@ $app->group( '/preparaciones', function ( RouteCollectorProxy $group ) {
 // - Mesas -
 $app->group( '/mesas', function ( RouteCollectorProxy $group ) {
 
+    // TODO
+    // GET RECAUDACIÓN DE DINERO DE LAS MESAS????
+
     $group->get( '[/]', MesaController::class . ':getAllMesas' )->add( new AuthMiddleware( 'admin' ) );
+    // $group->get( '[/]', MesaController::class . ':getAllMesas' )->add( new AuthMiddleware( 'admin' ) );
     $group->get( '/{codigo}', MesaController::class . ':getMesaByCode' );
     $group->put( '/{codigo}', MesaController::class . ':updateMesa' );
     $group->post( '[/]', MesaController::class . ':addMesa' )->add( new AuthMiddleware( 'admin' ) );
