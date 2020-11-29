@@ -38,13 +38,13 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 });
 
 // // - Usuarios -
-// $app->group( '/usuarios', function ( RouteCollectorProxy $group ) {
+$app->group( '/usuarios', function ( RouteCollectorProxy $group ) {
 
-//     $group->get( '[/]', UsuarioController::class . ':getAllUsers' );
-//     $group->post( '[/]', UsuarioController::class . ':addUser' );
-//     $group->delete( '/{id}', UsuarioController::class . ':deleteUser' );
+    $group->get( '[/]', UsuarioController::class . ':getAllUsers' );
+    $group->post( '[/]', UsuarioController::class . ':addUser' );
+    $group->delete( '/{id}', UsuarioController::class . ':deleteUser' );
 
-// })->add( new JsonMiddleware );
+})->add( new JsonMiddleware );
 
 // $app->post( '/login[/]', UsuarioController::class . ':loginUser' );
 
