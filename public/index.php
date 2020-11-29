@@ -40,7 +40,7 @@ use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 
 // Controllers
-use TP_Comanda\Config\Database;
+// use Config\Database;
 use App\Controllers\UsuarioController;
 use App\Controllers\ProductoController;
 use App\Controllers\PedidoController;
@@ -58,7 +58,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 require __DIR__ . '/../vendor/autoload.php';
 
 
-$conn = new Database;
+// $conn = new Database;
 
 $app = AppFactory::create();
 // $app->setBasePath( '/TP_Comanda/public' );
@@ -69,14 +69,14 @@ $app->get('/', function (Request $request, Response $response, array $args) {
     return $response;
 });
 
-// // - Usuarios -
-// $app->group( '/usuarios', function ( RouteCollectorProxy $group ) {
+// - Usuarios -
+$app->group( '/usuarios', function ( RouteCollectorProxy $group ) {
 
-//     $group->get( '[/]', UsuarioController::class . ':getAllUsers' );
-//     $group->post( '[/]', UsuarioController::class . ':addUser' );
-//     $group->delete( '/{id}', UsuarioController::class . ':deleteUser' );
+    $group->get( '[/]', UsuarioController::class . ':getAllUsers' );
+    $group->post( '[/]', UsuarioController::class . ':addUser' );
+    $group->delete( '/{id}', UsuarioController::class . ':deleteUser' );
 
-// })->add( new JsonMiddleware );
+})->add( new JsonMiddleware );
 
 // $app->post( '/login[/]', UsuarioController::class . ':loginUser' );
 
