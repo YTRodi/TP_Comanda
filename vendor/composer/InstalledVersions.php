@@ -19,7 +19,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '91708a772ad42e17ae018bd715b39db7c8031864',
+    'reference' => 'd2499f5779ce39b28f7f83851054078e274a09e6',
     'name' => 'yago/skeleton',
   ),
   'versions' => 
@@ -252,12 +252,12 @@ private static $installed = array (
     ),
     'slim/psr7' => 
     array (
-      'pretty_version' => '1.2.0',
-      'version' => '1.2.0.0',
+      'pretty_version' => '1.3.0',
+      'version' => '1.3.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '832912cb3c2a807d472ef0ac392552e85703a667',
+      'reference' => '235d2e5a5ee1ad4b97b96870f37f3091b22fffd7',
     ),
     'slim/slim' => 
     array (
@@ -390,7 +390,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '91708a772ad42e17ae018bd715b39db7c8031864',
+      'reference' => 'd2499f5779ce39b28f7f83851054078e274a09e6',
     ),
   ),
 );
