@@ -5,17 +5,18 @@ use Slim\Routing\RouteCollectorProxy;
 
 // Controllers
 use Config\Database;
-use App\Controllers\UsuarioController;
-use App\Controllers\MesaController;
-use App\Controllers\ProductoController;
-use App\Controllers\PedidoController;
-use App\Controllers\PreparacioneController;
+// use App\Controllers\UsuarioController;
+use App\UsuarioController;
+// use App\Controllers\MesaController;
+// use App\Controllers\ProductoController;
+// use App\Controllers\PedidoController;
+// use App\Controllers\PreparacioneController;
 
 
 // Middleware
 use App\Middleware\JsonMiddleware;
-use App\Middleware\AuthMiddleware;
-use App\Middleware\AuthAllMiddleware;
+// use App\Middleware\AuthMiddleware;
+// use App\Middleware\AuthAllMiddleware;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
