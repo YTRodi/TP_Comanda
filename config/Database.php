@@ -15,9 +15,9 @@ class Database {
         $capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'id15541186_restaurante',
-            'username'  => 'id15541186_yago',
-            'password'  => 'Fbv%\qGax3Dro$YA',
+            'database'  => 'restaurante',
+            'username'  => 'root',
+            'password'  => '',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
