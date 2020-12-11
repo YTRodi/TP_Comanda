@@ -15,13 +15,24 @@ class Database {
         $capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'restaurante',
-            'username'  => 'root',
-            'password'  => '',
+            'database'  => 'yagor_comanda',
+            'username'  => 'yagor_root',
+            'password'  => 'Merlink223',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
         ]);
+
+        // $capsule->addConnection([
+        //     'driver'    => 'mysql',
+        //     'host'      => 'localhost',
+        //     'database'  => 'restaurante',
+        //     'username'  => 'root',
+        //     'password'  => '',
+        //     'charset'   => 'utf8',
+        //     'collation' => 'utf8_unicode_ci',
+        //     'prefix'    => '',
+        // ]);
 
         // Set the event dispatcher used by Eloquent models... (optional)
 
