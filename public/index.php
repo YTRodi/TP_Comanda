@@ -74,9 +74,12 @@ $app->group( '/mesas', function ( RouteCollectorProxy $group ) {
     // GET RECAUDACIÓN DE DINERO DE LAS MESAS????
 
     $group->get( '[/]', MesaController::class . ':getAllMesas' )->add( new AuthMiddleware( 'admin' ) );
-    // $group->get( '[/]', MesaController::class . ':getAllMesas' )->add( new AuthMiddleware( 'admin' ) );
     $group->get( '/{codigo}', MesaController::class . ':getMesaByCode' );
-    $group->put( '/{codigo}', MesaController::class . ':updateMesa' );
+
+    $group->put( '/comiendo/{codigo}', MesaController::class . ':updateMesaEating' )->add( new AuthMiddleware( 'mozo' ) );
+    $group->put( '/pagando/{codigo}', MesaController::class . ':updateMesaPaying' )->add( new AuthMiddleware( 'mozo' ) );;
+    $group->put( '/cerrando/{codigo}', MesaController::class . ':updateMesaClosing' )->add( new AuthMiddleware( 'admin' ) );;
+
     $group->post( '[/]', MesaController::class . ':addMesa' )->add( new AuthMiddleware( 'admin' ) );
 
 })->add( new JsonMiddleware );

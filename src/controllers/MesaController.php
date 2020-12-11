@@ -118,44 +118,88 @@ class MesaController {
     }
 
 
+    public function updateMesaEating ( Request $request, Response $response, $args ) {
 
-    //! PARA CAMBIAR EL ESTADO! ( SÓLO ADMIN )
-    // public function updateUser ( Request $request, Response $response, $args ) {
-    
-    //     try {
+        try {
+
+            // Lógica: traer el pedido que este asignado a esta mesa.
+            $codigoMesa = $args['codigo'];
+            $mesaByCode = Mesa::get()->where( 'codigo', '=', $codigoMesa )->first();
+            $pedido = Pedido::get()->where( 'codigo_mesa', '=', $codigoMesa )->first();
+
+            if( $pedido['estado_general'] === 'listo' ) {
+
+                $mesaByCode['estado'] = 'con clientes comiendo';
+                $rta = $mesaByCode->save();
+                $response->getBody()->write( 'Se actualizó el estado de la mesa a: ' . $mesaByCode['estado'] );
+
+            } else 
+                $response->getBody()->write( 'El pedido todavía no está listo.' );
             
-    //         $idUrl = $args['id'] ?? '';
-    //         $mesa = Usuario::find( intval( $idUrl ) );
+            return $response;
 
-    //         $rta = $mesa->save();
-    //         $response->getBody()->write( json_encode( $rta ) );
-    //         return $response;
+        } catch (\Throwable $e) {
 
-    //     } catch (\Throwable $e) {
+            throw new Exception( $e->getMessage() );
 
-    //         throw new Exception( $e->getMessage() );
-
-    //     }
+        }
         
-    // }
+    }
 
-    // public function deleteUser ( Request $request, Response $response, $args ) {
-    
-    //     $idUrl = $args['id'] ?? '';
-    //     $mesa = Usuario::find( intval( $idUrl ) );
-    //     // echo json_encode($mesa);
+    public function updateMesaPaying ( Request $request, Response $response, $args ) {
 
-    //     if( $mesa ) {
+        try {
 
-    //         $rta = $mesa->delete();
-    //         $response->getBody()->write( json_encode( $rta ) );
+            // Lógica: traer el pedido que este asignado a esta mesa.
+            $codigoMesa = $args['codigo'];
+            $mesaByCode = Mesa::get()->where( 'codigo', '=', $codigoMesa )->first();
+            $pedido = Pedido::get()->where( 'codigo_mesa', '=', $codigoMesa )->first();
+
+            if( $mesaByCode['estado'] === 'con clientes comiendo' ) {
+
+                $mesaByCode['estado'] = 'con clientes pagando';
+                $rta = $mesaByCode->save();
+                $response->getBody()->write( 'Se actualizó el estado de la mesa a: ' . $mesaByCode['estado'] );
+
+            } else 
+                $response->getBody()->write( 'El pedido todavía no está listo.' );
             
-    //     } else {
-    //         $response->getBody()->write( 'No existe usuario con el id = ' . $idUrl );
-    //     }
+            return $response;
 
-    //     return $response;
+        } catch (\Throwable $e) {
+
+            throw new Exception( $e->getMessage() );
+
+        }
         
-    // }
+    }
+
+    public function updateMesaClosing ( Request $request, Response $response, $args ) {
+
+        try {
+
+            // Lógica: traer el pedido que este asignado a esta mesa.
+            $codigoMesa = $args['codigo'];
+            $mesaByCode = Mesa::get()->where( 'codigo', '=', $codigoMesa )->first();
+            $pedido = Pedido::get()->where( 'codigo_mesa', '=', $codigoMesa )->first();
+
+            if( $mesaByCode['estado'] === 'con clientes pagando' ) {
+
+                $mesaByCode['estado'] = 'cerrada';
+                $rta = $mesaByCode->save();
+                $response->getBody()->write( 'Se actualizó el estado de la mesa a: ' . $mesaByCode['estado'] );
+
+            } else 
+                $response->getBody()->write( 'El pedido todavía no está listo.' );
+            
+            return $response;
+
+        } catch (\Throwable $e) {
+
+            throw new Exception( $e->getMessage() );
+
+        }
+        
+    }
 
 }
