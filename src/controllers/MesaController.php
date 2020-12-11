@@ -56,68 +56,6 @@ class MesaController {
         
     }
 
-    public function updateMesa ( Request $request, Response $response, $args ) {
-
-        try {
-
-            // Lógica: traer el pedido que este asignado a esta mesa.
-            $codigoMesa = $args['codigo'];
-            $mesaByCode = Mesa::get()->where( 'codigo', '=', $codigoMesa )->first();
-            $pedido = Pedido::get()->where( 'codigo_mesa', '=', $codigoMesa )->first();
-
-            $tokenHeader = $request->getHeader( 'token' )[0];
-            $jwtDecodificado = AuthJWT::ValidarToken( $tokenHeader );
-            $sectorUsuario = $jwtDecodificado->data->sector;
-
-            switch ($pedido['estado_general']) {
-
-                case 'listo':
-                    switch ( $mesaByCode['estado'] ) {
-                        
-                        case 'con cliente esperando pedido':
-                            if( $sectorUsuario === 'mozo')
-                                $mesaByCode['estado'] = 'con clientes comiendo';
-                            else
-                                $response->getBody()->write( 'El usuario no es mozo.' );
-                            break;
-
-                        case 'con clientes comiendo':
-                            if( $sectorUsuario === 'mozo')
-                                $mesaByCode['estado'] = 'con clientes pagando';
-                            else
-                                $response->getBody()->write( 'El usuario no es mozo.' );
-                            break;
-
-                        case 'con clientes pagando':
-                            if( $sectorUsuario === 'admin')
-                                $mesaByCode['estado'] = 'cerrada';
-                            else
-                                $response->getBody()->write( 'El usuario no es admin.' );
-                            break;
-                    }
-
-                    $rta = $mesaByCode->save();
-                    $response->getBody()->write( json_encode( $rta ) );
-
-                break;
-
-                default:
-                    $response->getBody()->write( 'El pedido todavía no está listo.' );
-                break;
-            }
-            
-
-            return $response;
-
-        } catch (\Throwable $e) {
-
-            throw new Exception( $e->getMessage() );
-
-        }
-        
-    }
-
-
     public function updateMesaEating ( Request $request, Response $response, $args ) {
 
         try {
