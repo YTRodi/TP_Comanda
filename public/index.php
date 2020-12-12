@@ -1,41 +1,43 @@
 <?php
 
+
+use Config\Database;
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 
-// // Controllers
-use Config\Database;
-// use App\Controllers\UsuarioController;
-// use App\Controllers\MesaController;
-// use App\Controllers\ProductoController;
-// use App\Controllers\PedidoController;
-// use App\Controllers\PreparacioneController;
+// Controllers
+use Controllers\UsuarioController;
 
-
-// // Middleware
-// use App\Middleware\JsonMiddleware;
-// use App\Middleware\AuthMiddleware;
-// use App\Middleware\AuthAllMiddleware;
+// Middleware
+use Middleware\JsonMiddleware;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$conn = new Database;
-
-
 $app = AppFactory::create();
-// $app->setBasePath( '/TP_Comanda/public' );
+
+$conn = new Database();
+
 const ARRAY_ROLES = [ 'admin', 'cocina', 'barra', 'cerveza', 'mozo']; // Para dar de alta preparaciones
 
-$app->get('/usuarios', function (Request $request, Response $response, array $args) {
+$app->get('/', function (Request $request, Response $response, array $args) {
     $response->getBody()->write( "Hello world" );
     return $response;
 });
 
 
-// // - Usuarios -
+// - Usuarios -
+$app->group('/usuarios', function ( RouteCollectorProxy $group ) {
+
+    $group->get('[/]', UsuarioController::class . ':getAllUsers' );
+    $group->post('[/]', UsuarioController::class . ':addUser' );
+    $group->delete('/{id}', UsuarioController::class . ':deleteUser' );
+
+})->add( new JsonMiddleware );
+
+// // - Login -
 // $app->post( '/login[/]', UsuarioController::class . ':loginUser' );
 
 

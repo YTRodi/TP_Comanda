@@ -1,51 +1,52 @@
 <?php 
 
-namespace App\Controllers;
+namespace Controllers;
 
+use Models\Usuario;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use App\Models\Usuario;
+// use App\Models\Usuario;
 
 class UsuarioController {
 
-    // JWT
-    public function loginUser ( Request $request, Response $response ) {
+    // // JWT
+    // public function loginUser ( Request $request, Response $response ) {
 
-        //Username, password y sector
-        $body = $request->getParsedBody();
-        $username = $body['username'];
-        $password = $body['password'];
-        $sector = $body['sector'];
+    //     //Username, password y sector
+    //     $body = $request->getParsedBody();
+    //     $username = $body['username'];
+    //     $password = $body['password'];
+    //     $sector = $body['sector'];
 
-        $user = Usuario::where('username','=',$username)
-                       ->where('password','=',$password)
-                       ->where('sector','=',$sector)
-                       ->first();
+    //     $user = Usuario::where('username','=',$username)
+    //                    ->where('password','=',$password)
+    //                    ->where('sector','=',$sector)
+    //                    ->first();
 
-        if ( $user ) {
+    //     if ( $user ) {
 
-                $payload = [
-                    'id' => $user['id'],
-                    'username' => $user['username'],
-                    'password' => $user['password'],
-                    'sector' => $user['sector']
-                ];
+    //             $payload = [
+    //                 'id' => $user['id'],
+    //                 'username' => $user['username'],
+    //                 'password' => $user['password'],
+    //                 'sector' => $user['sector']
+    //             ];
 
-                $token = AuthJWT::Login( $payload );
+    //             $token = AuthJWT::Login( $payload );
 
-                // TOKEN!!!
-                print_r( $token );
+    //             // TOKEN!!!
+    //             print_r( $token );
 
-        } else {
+    //     } else {
 
-            $response->getBody()->write( 'No existe el usuario.' );
+    //         $response->getBody()->write( 'No existe el usuario.' );
 
-        }
+    //     }
 
-        return $response;
+    //     return $response;
 
-    }
+    // }
 
     // -------------------------------------------------------------------
     // -------------------------------------------------------------------

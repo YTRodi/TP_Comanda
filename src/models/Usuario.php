@@ -1,7 +1,7 @@
 <?php 
 // Mismo nombre que la tabla que voy a manejar
 
-namespace App\Models;
+namespace Models;
 
 use Illuminate\Database\Eloquent\Model;
 

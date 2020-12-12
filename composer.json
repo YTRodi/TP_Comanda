@@ -1,12 +1,5 @@
 {
     "name": "yago/skeleton",
-    "description": "Tp Comanda",
-    "authors": [
-        {
-            "name": "YTRodi",
-            "email": "yagorodi@gmail.com"
-        }
-    ],
     "require": {
         "slim/slim": "4.*",
         "slim/psr7": "^1.2",
@@ -16,8 +9,10 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src",
-            "Config\\": "config"
+            "Config\\": "Config",
+            "Models\\": "src/Models",
+            "Controllers\\": "src/Controllers",
+            "Middleware\\": "src/Middleware"
         }
     }
 }
