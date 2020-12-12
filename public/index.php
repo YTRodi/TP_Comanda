@@ -1,15 +1,21 @@
 <?php
 
-
 use Config\Database;
+
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 
 // Controllers
 use Controllers\UsuarioController;
+use Controllers\MesaController;
+use Controllers\PedidoController;
+use Controllers\PreparacioneController;
+use Controllers\ProductoController;
 
 // Middleware
 use Middleware\JsonMiddleware;
+use Middleware\AuthAllMiddleware;
+use Middleware\AuthMiddleware;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -37,55 +43,55 @@ $app->group('/usuarios', function ( RouteCollectorProxy $group ) {
 
 })->add( new JsonMiddleware );
 
-// // - Login -
-// $app->post( '/login[/]', UsuarioController::class . ':loginUser' );
+// - Login -
+$app->post( '/login[/]', UsuarioController::class . ':loginUser' );
 
 
-// // - Productos -
-// $app->get( '/productos', ProductoController::class . ':getAllProductos' )
-//       ->add( new AuthMiddleware( 'admin' ) )
-//       ->add( new JsonMiddleware );
+// - Productos -
+$app->get( '/productos', ProductoController::class . ':getAllProductos' )
+      ->add( new AuthMiddleware( 'admin' ) )
+      ->add( new JsonMiddleware );
 
 
 
-// // - Pedidos -
-// $app->group( '/pedidos', function ( RouteCollectorProxy $group ) {
+// - Pedidos -
+$app->group( '/pedidos', function ( RouteCollectorProxy $group ) {
 
-//     $group->get( '[/]', PedidoController::class . ':getAllPedidos' )->add( new AuthMiddleware( 'admin' ) );
-//     $group->get( '/{codigo}', PedidoController::class . ':getPedidoByCode' );
-//     $group->put( '/{codigo}', PedidoController::class . ':updatePedido' )->add( new AuthAllMiddleware( ARRAY_ROLES ) );
-//     $group->post( '[/]', PedidoController::class . ':addPedido' )->add( new AuthMiddleware( 'mozo' ) );
-//     // $group->delete( '/{id}', PedidoController::class . ':deletePedido' );
+    $group->get( '[/]', PedidoController::class . ':getAllPedidos' )->add( new AuthMiddleware( 'admin' ) );
+    $group->get( '/{codigo}', PedidoController::class . ':getPedidoByCode' );
+    $group->put( '/{codigo}', PedidoController::class . ':updatePedido' )->add( new AuthAllMiddleware( ARRAY_ROLES ) );
+    $group->post( '[/]', PedidoController::class . ':addPedido' )->add( new AuthMiddleware( 'mozo' ) );
+    // $group->delete( '/{id}', PedidoController::class . ':deletePedido' );
 
-// })->add( new JsonMiddleware );
-
-
-// // - Preparaciones -
-// $app->group( '/preparaciones', function ( RouteCollectorProxy $group ) {
-
-//     $group->get( '/{codigo}', PreparacioneController::class . ':getPreparacionesByCode' )->add( new AuthAllMiddleware( ARRAY_ROLES ) );
-//     $group->put( '/{codigo}', PreparacioneController::class . ':updatePreparacion' )->add( new AuthAllMiddleware( ARRAY_ROLES ) );
-
-// })->add( new JsonMiddleware );
+})->add( new JsonMiddleware );
 
 
-// // - Mesas -
-// $app->group( '/mesas', function ( RouteCollectorProxy $group ) {
+// - Preparaciones -
+$app->group( '/preparaciones', function ( RouteCollectorProxy $group ) {
 
-//     // TODO
-//     // GET RECAUDACIÓN DE DINERO DE LAS MESAS????
+    $group->get( '/{codigo}', PreparacioneController::class . ':getPreparacionesByCode' )->add( new AuthAllMiddleware( ARRAY_ROLES ) );
+    $group->put( '/{codigo}', PreparacioneController::class . ':updatePreparacion' )->add( new AuthAllMiddleware( ARRAY_ROLES ) );
 
-//     $group->get( '[/]', MesaController::class . ':getAllMesas' )->add( new AuthMiddleware( 'admin' ) );
-//     $group->get( '/{codigo}', MesaController::class . ':getMesaByCode' );
-
-//     $group->put( '/comiendo/{codigo}', MesaController::class . ':updateMesaEating' )->add( new AuthMiddleware( 'mozo' ) );
-//     $group->put( '/pagando/{codigo}', MesaController::class . ':updateMesaPaying' )->add( new AuthMiddleware( 'mozo' ) );;
-//     $group->put( '/cerrando/{codigo}', MesaController::class . ':updateMesaClosing' )->add( new AuthMiddleware( 'admin' ) );;
-
-//     $group->post( '[/]', MesaController::class . ':addMesa' )->add( new AuthMiddleware( 'admin' ) );
-
-// })->add( new JsonMiddleware );
+})->add( new JsonMiddleware );
 
 
-// $app->addBodyParsingMiddleware(); // Para poder usar los datos que enviamos desde el body para el PUT ( vamos por 'x-www-form-urlencoded', no por form-data)
+// - Mesas -
+$app->group( '/mesas', function ( RouteCollectorProxy $group ) {
+
+    // TODO
+    // GET RECAUDACIÓN DE DINERO DE LAS MESAS????
+
+    $group->get( '[/]', MesaController::class . ':getAllMesas' )->add( new AuthMiddleware( 'admin' ) );
+    $group->get( '/{codigo}', MesaController::class . ':getMesaByCode' );
+
+    $group->put( '/comiendo/{codigo}', MesaController::class . ':updateMesaEating' )->add( new AuthMiddleware( 'mozo' ) );
+    $group->put( '/pagando/{codigo}', MesaController::class . ':updateMesaPaying' )->add( new AuthMiddleware( 'mozo' ) );;
+    $group->put( '/cerrando/{codigo}', MesaController::class . ':updateMesaClosing' )->add( new AuthMiddleware( 'admin' ) );;
+
+    $group->post( '[/]', MesaController::class . ':addMesa' )->add( new AuthMiddleware( 'admin' ) );
+
+})->add( new JsonMiddleware );
+
+
+$app->addBodyParsingMiddleware(); // Para poder usar los datos que enviamos desde el body para el PUT ( vamos por 'x-www-form-urlencoded', no por form-data)
 $app->run();
