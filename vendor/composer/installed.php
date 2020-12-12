@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '9952459da8504681d7a5bb2a0099bfdb00d81f48',
+    'reference' => '7d4d1bf98ac6238939e0a2141e05705fd810e380',
     'name' => 'yago/skeleton',
   ),
   'versions' => 
@@ -377,7 +377,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '9952459da8504681d7a5bb2a0099bfdb00d81f48',
+      'reference' => '7d4d1bf98ac6238939e0a2141e05705fd810e380',
     ),
   ),
 );
