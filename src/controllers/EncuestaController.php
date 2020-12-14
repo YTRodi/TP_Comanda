@@ -21,21 +21,6 @@ class EncuestaController {
         'Restaurante altamente recomendado'
     ];
 
-    public function getEncuestaByCode ( Request $request, Response $response, $args ) {
-    
-        // // Lógica: con el código me traigo el pedido específico.
-        // $codigoMesa = $args['codigo'];
-        // $mesaByCode = Mesa::get()->where( 'codigo', '=', $codigoMesa )->first();
-
-        // if( $mesaByCode )
-        //     $response->getBody()->write( json_encode( $mesaByCode ));
-        // else 
-        //     $response->getBody()->write( 'No existe el pedido con el código ' . $codigoMesa );
-
-        // return $response;
-
-    }
-
     public function addEncuesta ( Request $request, Response $response ) {
 
         $encuesta = new Encuesta;
