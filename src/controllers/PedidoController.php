@@ -118,7 +118,7 @@ class PedidoController {
             // Traigo todas las preparaciones con el código especificado.
             $preparacionesByCode = Preparacione::where( 'codigo_pedido', '=', $codigoPedido )->get();
 
-            if( $pedido['tiempo_espera'] !== 0 ) {
+            if( $pedido['tiempo_espera'] != 0 ) {
 
                 foreach ( $preparacionesByCode as $key => $preparacion ) {
 
@@ -128,7 +128,6 @@ class PedidoController {
     
                     // Switch para preparación.
                     switch ( $usuario['sector'] ) {
-    
                         case 'cocina':
                             $pedido['estado_cocina'] = 'en preparación';
                             break;
@@ -151,6 +150,7 @@ class PedidoController {
                 $response->getBody()->write( json_encode( $rta ) );
                 
             } else {
+                // echo $pedido['estado_cocina'] . ' ' . $pedido['estado_barra'] . ' ' . $pedido['estado_cerveza'];
                 
                 // Si el tiempo esperado es -= tiempo esperado => significa que el pedido está listo, por lo tanto le cambio el estado.
                 if( $pedido['estado_cocina'] === 'en preparación' ) $pedido['estado_cocina'] = 'listo';

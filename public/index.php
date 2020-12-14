@@ -1,7 +1,6 @@
 <?php
 
 use Config\Database;
-
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -11,6 +10,7 @@ use Controllers\MesaController;
 use Controllers\PedidoController;
 use Controllers\PreparacioneController;
 use Controllers\ProductoController;
+use Controllers\EncuestaController;
 
 // Middleware
 use Middleware\JsonMiddleware;
@@ -43,6 +43,7 @@ $app->group('/usuarios', function ( RouteCollectorProxy $group ) {
 
 })->add( new JsonMiddleware );
 
+
 // - Login -
 $app->post( '/login[/]', UsuarioController::class . ':loginUser' );
 
@@ -51,7 +52,6 @@ $app->post( '/login[/]', UsuarioController::class . ':loginUser' );
 $app->get( '/productos', ProductoController::class . ':getAllProductos' )
       ->add( new AuthMiddleware( 'admin' ) )
       ->add( new JsonMiddleware );
-
 
 
 // - Pedidos -
@@ -78,9 +78,6 @@ $app->group( '/preparaciones', function ( RouteCollectorProxy $group ) {
 // - Mesas -
 $app->group( '/mesas', function ( RouteCollectorProxy $group ) {
 
-    // TODO
-    // GET RECAUDACIÓN DE DINERO DE LAS MESAS????
-
     $group->get( '[/]', MesaController::class . ':getAllMesas' )->add( new AuthMiddleware( 'admin' ) );
     $group->get( '/{codigo}', MesaController::class . ':getMesaByCode' );
 
@@ -89,6 +86,15 @@ $app->group( '/mesas', function ( RouteCollectorProxy $group ) {
     $group->put( '/cerrando/{codigo}', MesaController::class . ':updateMesaClosing' )->add( new AuthMiddleware( 'admin' ) );;
 
     $group->post( '[/]', MesaController::class . ':addMesa' )->add( new AuthMiddleware( 'admin' ) );
+
+})->add( new JsonMiddleware );
+
+
+// - Encuesta -
+$app->group( '/encuestas', function ( RouteCollectorProxy $group ) {
+
+    // $group->get( '/{codigo}', PreparacioneController::class . ':getPreparacionesByCode' );
+    $group->post( '[/]', EncuestaController::class . ':addEncuesta' )->add( new AuthMiddleware( 'admin' ) );
 
 })->add( new JsonMiddleware );
 
