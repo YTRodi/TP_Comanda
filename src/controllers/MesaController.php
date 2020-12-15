@@ -11,6 +11,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 
 use Exception;
+use Models\Usuario;
 
 class MesaController {
 
@@ -61,7 +62,6 @@ class MesaController {
 
         try {
 
-            // Lógica: traer el pedido que este asignado a esta mesa.
             $codigoMesa = $args['codigo'];
             $mesaByCode = Mesa::get()->where( 'codigo', '=', $codigoMesa )->first();
             $pedido = Pedido::get()->where( 'codigo_mesa', '=', $codigoMesa )->first();
@@ -89,7 +89,6 @@ class MesaController {
 
         try {
 
-            // Lógica: traer el pedido que este asignado a esta mesa.
             $codigoMesa = $args['codigo'];
             $mesaByCode = Mesa::get()->where( 'codigo', '=', $codigoMesa )->first();
             $pedido = Pedido::get()->where( 'codigo_mesa', '=', $codigoMesa )->first();
@@ -117,16 +116,27 @@ class MesaController {
 
         try {
 
-            // Lógica: traer el pedido que este asignado a esta mesa.
             $codigoMesa = $args['codigo'];
             $mesaByCode = Mesa::get()->where( 'codigo', '=', $codigoMesa )->first();
-            $pedido = Pedido::get()->where( 'codigo_mesa', '=', $codigoMesa )->first();
 
             if( $mesaByCode['estado'] === 'con clientes pagando' ) {
 
                 $mesaByCode['estado'] = 'cerrada';
                 $rta = $mesaByCode->save();
-                $response->getBody()->write( 'Se actualizó el estado de la mesa a: ' . $mesaByCode['estado'] );
+
+                // Aumento las operaciones del socio que cierra la mesa.
+                $tokenHeader = $request->getHeader( 'token' )[0];
+
+                if( $tokenHeader ) {
+
+                    $jwtDecodificado = AuthJWT::ValidarToken( $tokenHeader );
+                    $socio = Usuario::get()->where( 'id', '=', $jwtDecodificado->data->id )->first();
+                    $socio[ 'operaciones' ] = $socio[ 'operaciones' ] + 1;
+                    $rta = $socio->save();
+
+                    $response->getBody()->write( 'Se actualizó el estado de la mesa a: ' . $mesaByCode['estado'] . '<br/>' );
+                    $response->getBody()->write( 'Se aumentó las cantidad de operaciones del socio ' . $jwtDecodificado->data->username );
+                }
 
             } else 
                 $response->getBody()->write( 'El pedido todavía no está listo.' );

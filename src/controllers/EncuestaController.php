@@ -31,11 +31,11 @@ class EncuestaController {
 
             if( $mesaById['estado'] === 'cerrada' ) {
 
-                $encuesta[ 'id_mesa' ] = $mesaById[ 'id' ];
-                $encuesta[ 'puntaje_mesa' ] = $request->getParsedBody()[ 'puntaje_mesa' ] || 0;
-                $encuesta[ 'puntaje_restaurante' ] = $request->getParsedBody()[ 'puntaje_restaurante' ] || 0;
-                $encuesta[ 'puntaje_mozo' ] = $request->getParsedBody()[ 'puntaje_mozo' ] || 0;
-                $encuesta[ 'puntaje_cocinero' ] = $request->getParsedBody()[ 'puntaje_cocinero' ] || 0;
+                $encuesta[ 'puntaje_mesa' ] = $request->getParsedBody()[ 'puntaje_mesa' ];
+                $encuesta[ 'puntaje_restaurante' ] = $request->getParsedBody()[ 'puntaje_restaurante' ];
+                $encuesta[ 'puntaje_mozo' ] = $request->getParsedBody()[ 'puntaje_mozo' ];
+                $encuesta[ 'puntaje_cocinero' ] = $request->getParsedBody()[ 'puntaje_cocinero' ];
+
                 $randomKeys = array_rand( $this->comentarios ); // Genero un índice aleatorio
                 $encuesta[ 'comentario' ] = $this->comentarios[ $randomKeys ];
 
@@ -51,7 +51,6 @@ class EncuestaController {
 
             }
             
-
         } else {
 
             $response->getBody()->write( 'No se encontró la mesa.' );
